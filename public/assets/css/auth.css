@@ -1,0 +1,131 @@
+/* Auth page styles */
+    /* Global and body styles */
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    /* Parent container - flex layout for desktop, stacked for mobile */
+    .main-container {
+      display: flex;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    /* Left side with background image */
+    .image-side {
+      flex: 1 1 50%;
+      background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/996ffd33-10dd-45fa-a8d5-9ebfa5541f2b.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+    /* Responsive hiding the image side below desktop */
+    @media (max-width: 767px) {
+      .image-side {
+        display: none;
+      }
+    }
+    /* Right side for form */
+    .form-side {
+      flex: 1 1 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      background-color: #fff;
+    }
+    /* Card styles */
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 3rem 3rem 2rem;
+      box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
+      border-radius: 12px;
+      background-color: #fff;
+      text-align: center;
+    }
+    .login-card h2 {
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+      font-size: 1.75rem;
+    }
+    .login-card .subtitle {
+      color: #777;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+    /* Input spacing */
+    .form-control {
+      height: 50px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ced4da;
+      transition: border-color 0.3s ease;
+    }
+    /* Purple sign in button */
+    .btn-primary-custom {
+      width: 100%;
+      padding: 14px 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      background-color: #5a00e0;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 3px 12px rgb(90 0 224 / 0.5);
+      transition: background-color 0.3s ease;
+    }
+    .btn-primary-custom:hover,
+    .btn-primary-custom:focus {
+      background-color: #4200b3;
+      box-shadow: 0 5px 15px rgb(66 0 179 / 0.7);
+    }
+    /* Remember me & forgot password line */
+    .options-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+    /* Signup link styles */
+    .signup-text {
+      font-size: 1rem;
+      color: #777;
+      margin-top: 1.5rem;
+    }
+    .signup-text a {
+      color: #5a00e0;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 0.25rem;
+      transition: color 0.3s ease;
+    }
+    .signup-text a:hover {
+      color: #4200b3;
+      text-decoration: underline;
+    }
+    /* Input icon container */
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      pointer-events: none;
+      font-size: 20px;
+    }
+    /* Input wrapper to position icon */
+    .input-group-with-icon {
+      position: relative;
+    }
+    /* Padding input so text doesn't overlap icon */
+    .input-group-with-icon .form-control {
+      padding-left: 42px;
+    }
+  
