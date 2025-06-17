@@ -12,7 +12,7 @@ class SalesModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['ticket_id', 'user_id', 'quantity', 'total_price'];
+    protected $allowedFields    = ['ticket_id', 'user_id', 'quantity', 'total_price', 'user_name'];
 
     // Dates
     protected $useTimestamps = true;

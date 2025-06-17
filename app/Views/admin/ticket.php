@@ -1,24 +1,30 @@
 <?= view('layouts/header', [
-  'title' => 'Ticket Management',
+  'title' => 'Manajemen Tiket',
   'active' => 'ticket'
 ]); ?>
 
 <main class="table-container">
   <div class="container">
-    <h2 class="my-4">Ticket Management</h2>
+    <h2 class="my-4">Manajemen Tiket</h2>
+
+    <?php if (session()->getFlashdata('success')): ?>
+      <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+    <?php elseif (session()->getFlashdata('error')): ?>
+      <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
 
     <!-- Tombol Tambah -->
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addModal">Add New Ticket</button>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addModal">Tambah Tiket Baru</button>
 
     <!-- Tabel Tiket -->
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Ticket Name</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Actions</th>
+          <th>Nama Tiket</th>
+          <th>Harga</th>
+          <th>Stok</th>
+          <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -29,8 +35,8 @@
             <td>Rp<?= number_format($ticket['price'], 0, ',', '.') ?></td>
             <td><?= $ticket['stock'] ?></td>
             <td>
-              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $ticket['id'] ?>">Edit</button>
-              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $ticket['id'] ?>">Delete</button>
+              <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<?= $ticket['id'] ?>">Ubah</button>
+              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $ticket['id'] ?>">Hapus</button>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -45,32 +51,32 @@
     <form action="<?= base_url('admin/ticket/store') ?>" method="post" class="modal-content">
       <?= csrf_field() ?>
       <div class="modal-header">
-        <h5 class="modal-title" id="addModalLabel">Add New Ticket</h5>
+        <h5 class="modal-title" id="addModalLabel">Tambah Tiket Baru</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label class="form-label">Ticket Name</label>
+          <label class="form-label">Nama Tiket</label>
           <input type="text" class="form-control" name="name" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Price</label>
+          <label class="form-label">Harga</label>
           <input type="number" class="form-control" name="price" required>
         </div>
         <div class="mb-3">
-          <label class="form-label">Stock</label>
+          <label class="form-label">Stok</label>
           <input type="number" class="form-control" name="stock" required>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">Add Ticket</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary">Tambah</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Modal Edit & Delete Per Ticket -->
+<!-- Modal Edit & Hapus -->
 <?php foreach ($tickets as $ticket): ?>
   <!-- Modal Edit -->
   <div class="modal fade" id="editModal<?= $ticket['id'] ?>" tabindex="-1">
@@ -79,47 +85,47 @@
         <?= csrf_field() ?>
         <input type="hidden" name="_method" value="PUT">
         <div class="modal-header">
-          <h5 class="modal-title">Edit Ticket</h5>
+          <h5 class="modal-title">Ubah Tiket</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">Ticket Name</label>
+            <label class="form-label">Nama Tiket</label>
             <input type="text" class="form-control" name="name" value="<?= $ticket['name'] ?>" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Price</label>
+            <label class="form-label">Harga</label>
             <input type="number" class="form-control" name="price" value="<?= $ticket['price'] ?>" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Stock</label>
+            <label class="form-label">Stok</label>
             <input type="number" class="form-control" name="stock" value="<?= $ticket['stock'] ?>" required>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal Delete -->
+  <!-- Modal Hapus -->
   <div class="modal fade" id="deleteModal<?= $ticket['id'] ?>" tabindex="-1">
     <div class="modal-dialog">
       <form action="<?= base_url('admin/ticket/delete/' . $ticket['id']) ?>" method="post" class="modal-content">
         <?= csrf_field() ?>
         <input type="hidden" name="_method" value="DELETE">
         <div class="modal-header">
-          <h5 class="modal-title">Delete Ticket</h5>
+          <h5 class="modal-title">Hapus Tiket</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          Are you sure you want to delete <strong><?= $ticket['name'] ?></strong>?
+          Apakah kamu yakin ingin menghapus <strong><?= $ticket['name'] ?></strong>?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-danger">Hapus</button>
         </div>
       </form>
     </div>

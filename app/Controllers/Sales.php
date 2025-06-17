@@ -49,6 +49,7 @@ class Sales extends BaseController
             'quantity'    => $quantity,
             'total_price' => $totalPrice,
             'user_id'     => $userId,
+            'user_name'   => session()->get('username') // pastikan session user_name ada
         ]);
 
         // Kurangi stok
@@ -59,32 +60,31 @@ class Sales extends BaseController
         return redirect()->to('kasir/sales')->with('success', 'Transaksi berhasil disimpan.');
     }
     public function riwayat()
-{
-    $userId = session()->get('user_id'); // pastikan pakai 'user_id' sesuai session-mu
+    {
+        $userId = session()->get('user_id'); // pastikan pakai 'user_id' sesuai session-mu
 
-    $data = [
-        'title'   => 'Riwayat Pemesanan',
-        'active'  => 'riwayat',
-        'sales'   => $this->salesModel
-                        ->select('sales.*, tickets.name AS ticket_name, tickets.price AS ticket_price')
-                        ->join('tickets', 'tickets.id = sales.ticket_id')
-                        ->where('sales.user_id', $userId)
-                        ->orderBy('sales.created_at', 'DESC')
-                        ->findAll()
-    ];
+        $data = [
+            'title'   => 'Riwayat Pemesanan',
+            'active'  => 'riwayat',
+            'sales'   => $this->salesModel
+                ->select('sales.*, tickets.name AS ticket_name, tickets.price AS ticket_price')
+                ->join('tickets', 'tickets.id = sales.ticket_id')
+                ->where('sales.user_id', $userId)
+                ->orderBy('sales.created_at', 'DESC')
+                ->findAll()
+        ];
 
-    return view('kasir/riwayat', $data);
-}
+        return view('kasir/riwayat', $data);
+    }
 
-public function daftarTiket()
-{
-    $data = [
-        'title'   => 'Daftar Tiket',
-        'active'  => 'daftar',
-        'tickets' => $this->ticketModel->findAll(),
-    ];
+    public function daftarTiket()
+    {
+        $data = [
+            'title'   => 'Daftar Tiket',
+            'active'  => 'daftar',
+            'tickets' => $this->ticketModel->findAll(),
+        ];
 
-    return view('kasir/daftar_tiket', $data);
-}
-
+        return view('kasir/daftar_tiket', $data);
+    }
 }

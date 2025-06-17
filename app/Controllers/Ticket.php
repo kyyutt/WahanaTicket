@@ -65,8 +65,15 @@ class Ticket extends BaseController
 
 
     public function delete($id)
-    {
+{
+    try {
         $this->ticketModel->delete($id);
         return redirect()->to('/admin/ticket')->with('success', 'Tiket berhasil dihapus.');
+    } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+        return redirect()->to('/admin/ticket')->with('error', 'Tidak bisa hapus karena digunakan di tabel lain.');
+    } catch (\Exception $e) {
+        return redirect()->to('/admin/ticket')->with('error', 'An unexpected error occurred.');
     }
+}
+
 }
